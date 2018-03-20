@@ -7,7 +7,7 @@ class ParameterStore(object):
     """
 
     def __init__(self, ssm_client=None, with_decryption=True):
-        # type: (botocore.client.SSMm bool) -> None
+        # type: (botocore.client.SSM, bool) -> None
         """
         Initialize new parameter store client.
 

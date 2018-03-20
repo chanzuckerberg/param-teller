@@ -1,4 +1,0 @@
-pytest
-boto3
-botocore==1.9.8
-moto
