@@ -7,7 +7,7 @@ from botocore.exceptions import ParamValidationError
 
 @mock_ssm
 def test_get_values_by_path():
-    client = boto3.client('ssm', region_name='us-west-1')
+    client = boto3.client('ssm')
     client.put_parameter(Name='service1/key1', Value='value1_1', Type='SecureString')
     client.put_parameter(Name='service1/key2', Value='value1_2', Type='SecureString')
     client.put_parameter(Name='service2/key1', Value='value2_1', Type='SecureString')
@@ -27,7 +27,7 @@ def test_get_values_by_path_with_empty_path():
 
 @mock_ssm
 def test_get_values():
-    client = boto3.client('ssm', region_name='us-west-1')
+    client = boto3.client('ssm')
     client.put_parameter(Name='service1/key1', Value='value1_1', Type='SecureString')
     client.put_parameter(Name='service1/key2', Value='value1_2', Type='SecureString')
     client.put_parameter(Name='service2/key1', Value='value2_1', Type='SecureString')
@@ -47,7 +47,7 @@ def test_get_values_with_empty_key_list():
 
 @mock_ssm
 def test_get_values_by_prefix():
-    client = boto3.client('ssm', region_name='us-west-1')
+    client = boto3.client('ssm')
     client.put_parameter(Name='service1_key1', Value='value1_1', Type='SecureString')
     client.put_parameter(Name='service1/key2', Value='value1_2', Type='SecureString')
     client.put_parameter(Name='service2/key1', Value='value2_1', Type='SecureString')
@@ -61,7 +61,7 @@ def test_get_values_by_prefix():
 
 @mock_ssm
 def test_get_service_parameters():
-    client = boto3.client('ssm', region_name='us-west-1')
+    client = boto3.client('ssm')
     client.put_parameter(Name='proj1-prod-service1_key1', Value='value1_prod_1_1_no_path', Type='SecureString')
     client.put_parameter(Name='proj1-prod-service1/key1', Value='value1_prod_1_1', Type='SecureString')
     client.put_parameter(Name='proj1-prod-service1/key2', Value='value1_prod_1_2', Type='SecureString')
