@@ -1,6 +1,5 @@
 language: python
 python:
-  - "2.6"
   - "2.7"
   - "3.3"
   - "3.4"
@@ -9,6 +8,8 @@ python:
   - "3.6"
   - "3.6-dev"  # 3.6 development branch
   - "3.7-dev"  # 3.7 development branch
+env:
+  - AWS_DEFAULT_REGION=eu-west-1
 install:
   - pip install -r requirements.txt
 script:
