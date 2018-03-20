@@ -2,3 +2,4 @@
 
 [![Build Status](https://travis-ci.com/chanzuckerberg/param-teller.svg?token=qxcH9zWp4qxw9qDaKK3b&branch=master)](https://travis-ci.com/chanzuckerberg/param-teller)
 
+Helper library to load values form parameter store.
