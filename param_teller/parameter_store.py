@@ -75,7 +75,7 @@ class ParameterStore(object):
         keys = []
 
         while True:
-            filters = [{'Key': 'Name', 'Values': [f'{prefix}']}] if prefix else []
+            filters = [{'Key': 'Name', 'Values': ['{prefix}'.format(prefix=prefix)]}] if prefix else []
             response = self._ssm_client.describe_parameters(Filters=filters)
             keys += [param.get('Name') for param in response.get('Parameters', [])]
 
@@ -101,5 +101,5 @@ class ParameterStore(object):
             <service name>/.
         :return: Dictionary of parameter values indexed by parameter key.
         """
-        prefix = f"{project}-{env}-{service}"
+        prefix = "{project}-{env}-{service}".format(project=project, env=env, service=service)
         return self.get_values_by_path(path=prefix) if use_path else self.get_values_by_prefix(prefix=prefix)
