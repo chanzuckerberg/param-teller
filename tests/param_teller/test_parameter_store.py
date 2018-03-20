@@ -71,23 +71,6 @@ def test_get_values_by_prefix():
     _assert_key_value(values, 'service1/key2', 'value1_2')
 
 
-@mock_ssm
-def test_get_service_parameters():
-    client = boto3.client('ssm')
-    client.put_parameter(Name='proj1-prod-service1_key1', Value='value1_prod_1_1_no_path', Type='SecureString')
-    client.put_parameter(Name='proj1-prod-service1/key1', Value='value1_prod_1_1', Type='SecureString')
-    client.put_parameter(Name='proj1-prod-service1/key2', Value='value1_prod_1_2', Type='SecureString')
-    client.put_parameter(Name='proj1-test-service1/key3', Value='value1_test_1_3', Type='SecureString')
-    client.put_parameter(Name='proj1-prod-service2/key1', Value='value1_prod_2_1', Type='SecureString')
-    client.put_parameter(Name='proj2-prod-service1/key1', Value='value2_prod_1_1', Type='SecureString')
-
-    values = ParameterStore().get_service_parameters(project='proj1', env='prod', service='service1')
-
-    assert len(values) is 2
-    _assert_key_value(values, 'proj1-prod-service1/key1', 'value1_prod_1_1')
-    _assert_key_value(values, 'proj1-prod-service1/key2', 'value1_prod_1_2')
-
-
 def _assert_key_value(dictionary, key, value):
     assert key in dictionary
     assert dictionary.get(key) == value

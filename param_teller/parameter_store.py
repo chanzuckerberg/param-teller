@@ -101,19 +101,3 @@ class ParameterStore(object):
             values = self.get_values(*keys)
 
         return values
-
-    def get_service_parameters(self, project, env, service, use_path=True):
-        # type: (str, str, str, bool) -> dict
-        """
-        Wrapper to retrieve values for a given service. Each service is identified by the name of the project the
-            running environment and the name of the service.
-
-        :param project: Project name.
-        :param env: Environment name (e.g. prod, staging, dev)
-        :param service: Service name.
-        :param use_path: Wether to use paths to retrieve the keys. If true will search for keys in below
-            <service name>/.
-        :return: Dictionary of parameter values indexed by parameter key.
-        """
-        prefix = "{project}-{env}-{service}".format(project=project, env=env, service=service)
-        return self.get_values_by_path(path=prefix) if use_path else self.get_values_by_prefix(prefix=prefix)
