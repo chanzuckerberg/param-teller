@@ -8,4 +8,6 @@ setup(
     author='Tiago Carvalho',
     author_email='tcarvalho@chanzuckerberg.com',
     license='MIT',
-    packages=['param_teller'], install_requires=['boto3'])
+    packages=['param_teller'],
+    install_requires=['boto3'],
+    tests_require=['moto'])
