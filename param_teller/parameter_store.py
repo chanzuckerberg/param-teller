@@ -71,7 +71,7 @@ class ParameterStore(object):
         keys = []
 
         while True:
-            filters = [{'Key': 'Name', 'Values': [f'{prefix}.']}] if prefix else []
+            filters = [{'Key': 'Name', 'Values': [f'{prefix}']}] if prefix else []
             response = self._ssm_client.describe_parameters(Filters=filters)
             keys += [param.get('Name') for param in response.get('Parameters', [])]
 
@@ -80,7 +80,7 @@ class ParameterStore(object):
 
         values = {}
         if keys:
-            values = self.get_values('', *keys)
+            values = self.get_values(*keys)
 
         return values
 
