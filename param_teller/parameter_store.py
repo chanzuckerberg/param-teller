@@ -6,7 +6,8 @@ class ParameterStore(object):
     Retrieves parameters from AWS Parameter Store.
     """
 
-    def __init__(self, ssm_client=None, with_decryption: bool=True):
+    def __init__(self, ssm_client=None, with_decryption=True):
+        # type: (botocore.client.SSMm bool) -> None
         """
         Initialize new parameter store client.
 
@@ -17,7 +18,8 @@ class ParameterStore(object):
         self._ssm_client = ssm_client or client('ssm')
         self._with_decryption = with_decryption
 
-    def get_values_by_path(self, path: str):
+    def get_values_by_path(self, path):
+        # type: (str) -> dict
         """
         Retrieve all parameter values in a user provider path.
 
@@ -37,7 +39,8 @@ class ParameterStore(object):
 
         return values
 
-    def get_values(self, *keys: str):
+    def get_values(self, *keys):
+        # type: (str) -> dict
         """
         Retrieve parameter values by key names.
 
@@ -61,7 +64,8 @@ class ParameterStore(object):
 
         return values
 
-    def get_values_by_prefix(self, prefix: str=''):
+    def get_values_by_prefix(self, prefix=''):
+        # type: (str) -> dict
         """
         Retrieve all parameter values for keys that start with given prefix.
 
@@ -84,7 +88,8 @@ class ParameterStore(object):
 
         return values
 
-    def get_service_parameters(self, project: str, env: str, service: str, use_path=True):
+    def get_service_parameters(self, project, env, service, use_path=True):
+        # type: (str, str, str, bool) -> dict
         """
         Wrapper to retrieve values for a given service. Each service is identified by the name of the project the
             running environment and the name of the service.
