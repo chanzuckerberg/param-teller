@@ -40,6 +40,18 @@ def test_get_values():
 
 
 @mock_ssm
+def test_get_value():
+    client = boto3.client('ssm')
+    client.put_parameter(Name='service1/key1', Value='value1_1', Type='SecureString')
+    client.put_parameter(Name='service1/key2', Value='value1_2', Type='SecureString')
+    client.put_parameter(Name='service2/key1', Value='value2_1', Type='SecureString')
+
+    value = ParameterStore().get_value('service1/key2')
+
+    assert value == 'value1_2'
+
+
+@mock_ssm
 def test_get_values_with_empty_key_list():
     values = ParameterStore().get_values()
     assert len(values) is 0

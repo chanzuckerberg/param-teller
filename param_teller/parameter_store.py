@@ -18,6 +18,20 @@ class ParameterStore(object):
         self._ssm_client = ssm_client or client('ssm')
         self._with_decryption = with_decryption
 
+    def get_value(self, key):
+        # type: (str) -> str
+        """
+        Retrieve single parameter from store.
+
+        :param key:
+        :return:
+        """
+        response = self._ssm_client.get_parameter(
+            Name=key,
+            WithDecryption=self._with_decryption
+        )
+        return response.get('Parameter', {}).get('Value')
+
     def get_values_by_path(self, path):
         # type: (str) -> dict
         """
