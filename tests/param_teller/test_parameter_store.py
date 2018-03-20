@@ -21,7 +21,7 @@ def test_get_values_by_path():
 
 @mock_ssm
 def test_get_values_by_path_with_empty_path():
-    with raises(ParamValidationError, 'Invalid length for parameter Path'):
+    with raises(ParamValidationError, message='Invalid length for parameter Path'):
         ParameterStore().get_values_by_path('')
 
 
