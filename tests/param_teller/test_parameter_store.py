@@ -79,4 +79,3 @@ def test_get_service_parameters():
 def _assert_key_value(dictionary, key, value):
     assert key in dictionary
     assert dictionary.get(key) == value
-
