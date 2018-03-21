@@ -1,4 +1,4 @@
-from param_teller import ParameterStore
+from param_teller.parameter_store import ParameterStore
 
 
 class ProjectParameterStore(object):

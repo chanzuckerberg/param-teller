@@ -1,2 +1,1 @@
-from .project_parameter_store import ProjectParameterStore
-from .parameter_store import ParameterStore
+__all__ = ['parameter_store', 'project_parameter_store']
