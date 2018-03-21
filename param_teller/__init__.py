@@ -1,1 +1,2 @@
+from .project_parameter_store import ProjectParameterStore
 from .parameter_store import ParameterStore
