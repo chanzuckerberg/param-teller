@@ -6,7 +6,7 @@ class ProjectParameterStore(object):
     Wrapper to the parameter store to access keys using CZI's service name conventions.
     """
 
-    def __init__(self, project, env, service, key_separator=None):
+    def __init__(self, project, env, service, with_decryption=True, key_separator=None):
         """
         Initialization.
 
@@ -15,7 +15,7 @@ class ProjectParameterStore(object):
         :param service: Service name.
         :param key_separator: Custom separator to use if we do not want to use paths.
         """
-        self._parameter_store = ParameterStore()
+        self._parameter_store = ParameterStore(with_decryption=with_decryption)
         self._path = self._get_path(project, env, service)
         self._separator = key_separator
 
