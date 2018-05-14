@@ -1,4 +1,5 @@
 pytest==3.4.2
 boto3==1.6.11
 botocore==1.9.8
+mock==2.0.0
 moto==1.2.0
