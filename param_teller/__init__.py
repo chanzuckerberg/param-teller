@@ -1,3 +1,4 @@
 from param_teller.parameter_store import ParameterStore
+from param_teller.parameter_store import SecretsManager
 from param_teller.project_store import ProjectParameterStore
 from param_teller.project_store import ProjectSecretsManager
