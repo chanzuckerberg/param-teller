@@ -1,6 +1,6 @@
 from moto import mock_ssm
 from param_teller.project_store import ProjectParameterStore, ProjectSecretsManager
-from unittest.mock import patch, MagicMock
+from mock import patch, MagicMock
 import boto3
 import pytest
 

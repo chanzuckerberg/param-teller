@@ -1,5 +1,5 @@
 from param_teller.secrets_manager import SecretsManager
-from unittest.mock import patch, MagicMock
+from mock import patch, MagicMock
 
 
 # TODO: Replace by moto mock for SecretsManager when available
