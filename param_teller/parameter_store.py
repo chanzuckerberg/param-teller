@@ -1,3 +1,4 @@
+import botocore
 from boto3 import client
 
 
@@ -11,7 +12,7 @@ class ParameterStore(object):
         """
         Initialize new parameter store client.
 
-        :param ssm_client: Optional client provided by user. By default, it create a new client using the default
+        :param ssm_client: Optional client provided by user. By default, it creates a new client using the default
             session.
         :param with_decryption: If true, parameter store will decrypt values.
         """
@@ -40,16 +41,30 @@ class ParameterStore(object):
         :param path: Path where the parameters are store.
         :return: Dictionary of parameter values indexed by parameter key.
         """
+
+        # In AWS, a leading path is not required, i.e. "/param" and "param" match the same key and are not unique
+        # However, boto3 and moto (corresponding mocking library) require a leading path:
+        # http://boto3.readthedocs.io/en/latest/reference/services/ssm.html#SSM.Client.get_parameters_by_path
+        # Therefore we are enforcing the leading '/'
+        path = path.strip()
+        if path and not path.startswith("/"):
+            path = "/{path}".format(path=path)
+
         values = {}
+        extra_args = {}
         while True:
             response = self._ssm_client.get_parameters_by_path(
                 Path=path,
-                WithDecryption=self._with_decryption
+                WithDecryption=self._with_decryption,
+                **extra_args
             )
             values.update({param['Name']: param['Value'] for param in response['Parameters']})
 
-            if not response.get('NextToken'):
+            next_token = response.get('NextToken')
+            if not next_token:
                 break
+
+            extra_args['NextToken'] = next_token
 
         return values
 
@@ -58,7 +73,7 @@ class ParameterStore(object):
         """
         Retrieve parameter values by key names.
 
-        :param keys: list of keys to retrieve.
+        :param keys: keys to retrieve.
         :return: Dictionary of parameter values indexed by parameter key (includes only found keys).
         """
 
@@ -66,15 +81,20 @@ class ParameterStore(object):
             return {}
 
         values = {}
+        extra_args = {}
         while True:
             response = self._ssm_client.get_parameters(
                 Names=keys,
-                WithDecryption=self._with_decryption
+                WithDecryption=self._with_decryption,
+                **extra_args
             )
             values.update({param['Name']: param['Value'] for param in response['Parameters']})
 
-            if not response.get('NextToken'):
+            next_token = response.get('NextToken')
+            if not next_token:
                 break
+
+            extra_args['NextToken'] = next_token
 
         return values
 
@@ -88,13 +108,20 @@ class ParameterStore(object):
         """
         keys = []
 
+        filters = [{'Key': 'Name', 'Values': ['{prefix}'.format(prefix=prefix)]}] if prefix else []
+        extra_args = {}
         while True:
-            filters = [{'Key': 'Name', 'Values': ['{prefix}'.format(prefix=prefix)]}] if prefix else []
-            response = self._ssm_client.describe_parameters(Filters=filters)
+            response = self._ssm_client.describe_parameters(
+                Filters=filters,
+                **extra_args
+            )
             keys += [param.get('Name') for param in response.get('Parameters', [])]
 
-            if not response.get('NextToken'):
+            next_token = response.get('NextToken')
+            if not next_token:
                 break
+
+            extra_args['NextToken'] = next_token
 
         values = {}
         if keys:
