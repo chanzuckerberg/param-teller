@@ -6,7 +6,7 @@ Helper library to load values form AWS Parameter Store and decrypt values using 
 
 # Usage
 
-## Direct
+## Direct from AWS Backend
 
 ### Parameter Store
 
