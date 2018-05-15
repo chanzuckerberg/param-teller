@@ -30,10 +30,10 @@ from param_teller import SecretsManager
 secrets_manager = SecretsManager()
 
 secrets_manager.get_value(key='/base/super-secret1')
-# 'super-secret-value1'
+# {'secret': 'super-secret-value1'}
 
 secrets_manager.get_values_by_prefix(path='base')
-# {'base/super-secret1': 'super-secret-value1', 'base/super-secret2': 'super-secret-value2'}
+# {'/projx-prod-servicey/super-secret1': {'secret': 'super-secret-value1'}, '/projx-prod-servicey/super-secret2': {'secret': 'super-secret-value2'}}
 ```
 
 ## Project module following CZI's Service Name Convention
@@ -67,9 +67,9 @@ secrets_manager = ProjectSecretsManager(
     env='prod')
 
 secrets_manager.get_service_parameter(key='super-secret1')
-# 'super-secret-value1'
+# {'secret': 'super-secret-value1'}
 
 secrets_manager.get_service_parameters()
-# {'/projx-prod-servicey/super-secret1': 'super-secret-value1', '/projx-prod-servicey/super-secret2': 'super-secret-value2'}
+# {'/projx-prod-servicey/super-secret1': {'secret': 'super-secret-value1'}, '/projx-prod-servicey/super-secret2': {'secret': 'super-secret-value2'}}
 ```
 

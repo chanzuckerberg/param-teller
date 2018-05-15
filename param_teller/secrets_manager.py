@@ -73,6 +73,5 @@ class SecretsManager(object):
         :param prefix: Key name prefix.
         :return: Dictionary of secret values indexed by parameter key.
         """
-        print("prefix : {}".format(prefix))
         keys = [key for key in self._list_secret_keys() if key.startswith(prefix)]
         return self.get_values(*keys)
